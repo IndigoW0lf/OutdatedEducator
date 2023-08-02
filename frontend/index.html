@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Graduation Facts</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4A90E2;
+        }
+        .info {
+            color: #555;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #357ABD;
+        }
+        .results {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Outdated Facts + Concepts Taught in School</h1>
+        <p class="info">Ever wonder what information you were taught in high school that is no longer accurate? Select your graduation year and country to explore facts and concepts that have changed or become obsolete since then.</p>
+        <form id="factsForm">
+            <div class="input-group">
+                <label for="year">Graduation Year:</label>
+                <input type="text" id="year" name="year" required>
+            </div>
+            <div class="input-group">
+                <label for="country">Country:</label>
+                <select id="country" name="country" required></select>
+            </div>
+            <button type="submit">Get Facts</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const countries = [
+            "United States", "China", "India", "United Kingdom", "Germany",
+            "Japan", "Canada", "France", "Brazil", "Italy",
+            "Australia", "Russia", "South Korea", "Spain", "Mexico",
+            "Indonesia", "Netherlands", "Saudi Arabia", "Switzerland", "Turkey",
+            "Argentina", "Sweden", "Poland", "Belgium", "Thailand",
+            "Iran", "Austria", "Norway", "United Arab Emirates", "South Africa",
+            "Denmark", "Malaysia", "Singapore", "Israel", "Hong Kong",
+            "Finland", "Ireland", "Portugal", "New Zealand", "Czech Republic",
+            "Greece", "Qatar", "Kuwait", "Hungary", "Puerto Rico"
+        ];
+    
+        const countrySelect = document.getElementById('country');
+    
+        countries.forEach((country) => {
+          const option = document.createElement('option');
+          option.value = country;
+          option.text = country;
+          countrySelect.appendChild(option);
+        });
+    
+        document.getElementById('factsForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            // Getting values from the input fields
+            var year = document.getElementById('year').value;
+            var country = document.getElementById('country').value;
+    
+            // Making a POST request to your backend
+            fetch('http://127.0.0.1:5000/getFacts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ year: year, country: country }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Split the facts by newline and filter out any empty lines
+                const factsArray = data.facts.split('\n').filter(fact => fact.trim() !== '');
+    
+                // Create an HTML string with line breaks, removing any existing numbering
+                const factsHtml = factsArray.map((fact, index) => `<p>${index + 1}. ${fact.trim().replace(/^\d+\.\s*/, '')}</p>`).join('');
+    
+                // Display the results
+                document.getElementById('results').innerHTML = 'Facts:' + factsHtml;
+            })
+    
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('results').textContent = 'An error occurred. Please try again later.';
+            });
+        });
+    </script>
+</body>
+</html>
