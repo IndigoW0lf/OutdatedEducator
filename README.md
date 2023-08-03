@@ -27,7 +27,7 @@ This project allows users to retrieve outdated facts and concepts based on a spe
 2. Navigate to the project directory:
 
    ```bash
-   cd graduation-facts
+   cd OutdatedEducator
    ```
 
 3. Install the required dependencies:
