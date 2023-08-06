@@ -82,6 +82,8 @@ set OPENAI_API_KEY=your-api-key-here
 
 ## Running the Project
 
+<img align="right" alt="Screenshot" src="Screenshot 2023-08-03 at 1.26.14 PM.png" width="450" height="540"/>  
+
 After setting up the environment variable, you can run the Flask application:
 
 ```bash
