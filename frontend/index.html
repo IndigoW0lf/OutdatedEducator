@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <title>Graduation Facts</title>
+    <title>Outdated Educator</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -113,7 +113,7 @@
             var year = document.getElementById('year').value;
             var country = document.getElementById('country').value;
     
-            // Making a POST request to your backend
+            // Making a POST request to the backend
             fetch('http://127.0.0.1:5000/getFacts', {
                 method: 'POST',
                 headers: {
@@ -125,13 +125,21 @@
             .then(data => {
                 // Split the facts by newline and filter out any empty lines
                 const factsArray = data.facts.split('\n').filter(fact => fact.trim() !== '');
-    
+
+                // Group facts and revisions
+                const groupedFacts = [];
+                for (let i = 0; i < factsArray.length; i+=2) {
+                    groupedFacts.push(factsArray[i] + (factsArray[i+1] ? "<br>" + factsArray[i+1] : ""));
+                }
+
                 // Create an HTML string with line breaks, removing any existing numbering
-                const factsHtml = factsArray.map((fact, index) => `<p>${index + 1}. ${fact.trim().replace(/^\d+\.\s*/, '')}</p>`).join('');
-    
+                const factsHtml = groupedFacts.map((groupedFact, index) => `<p>${index + 1}. ${groupedFact.trim().replace(/^\d+\.\s*/, '')}</p>`).join('');
+
                 // Display the results
                 document.getElementById('results').innerHTML = 'Facts:' + factsHtml;
             })
+
+
     
             .catch(error => {
                 console.error('Error:', error);

@@ -15,15 +15,19 @@ def get_facts():
     year = data['year']
     country = data['country']
 
-    prompt = f"Provide 5 facts and concepts that might have been taught in 12th grade in {country} in the year {year} that have since been challenged, revised, or disproven. Ensure this was still being taught to high school seniors in {year}."
+    prompt = f"""
+Provide 5 major facts or concepts that were likely taught to high school senior students in {country} in the year {year} that have since been challenged, revised, or disproven. For each fact, briefly describe the revision or refutation and mention the year it was revisited.
+"""
 
-    response = openai.Completion.create(
-      engine="text-davinci-003",
-      prompt=prompt,
-      max_tokens=750
+    response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ],
     )
 
-    facts = response.choices[0].text.strip()
+    facts = response['choices'][0]['message']['content'].strip()
 
     return jsonify({"facts": facts})
 
