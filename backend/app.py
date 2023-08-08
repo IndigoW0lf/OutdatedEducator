@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import openai
 import os
@@ -6,7 +6,7 @@ import os
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = openai_api_key
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend')
 CORS(app)
 
 @app.route('/getFacts', methods=['POST'])
@@ -30,6 +30,10 @@ Provide 5 major facts or concepts that were likely taught to high school senior 
     facts = response['choices'][0]['message']['content'].strip()
 
     return jsonify({"facts": facts})
+
+@app.route('/')
+def index():
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
