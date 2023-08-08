@@ -36,17 +36,13 @@ This project allows users to retrieve outdated facts and concepts based on a spe
    pip install flask flask-cors openai
    ```
 
-### Obtaining the OpenAI API Key
+### Configuration
 
-To run this project, you'll need an API key from OpenAI. Follow these steps to obtain the key:
+To run this project, you'll need to configure your OpenAI API key:
 
-1. **Create an OpenAI Account**: If you don't have an OpenAI account, create one by visiting [OpenAI's signup page](https://platform.openai.com/signup).
+1. **Obtain an API Key**: Follow the instructions in [OpenAI's official documentation](https://platform.openai.com/docs/) to obtain your key.
 
-2. **Subscribe to a Plan**: Depending on your needs, you may need to subscribe to a paid plan. OpenAI offers different plans, including some free options. Review the pricing details on [OpenAI's pricing page](https://openai.com/pricing).
-
-3. **Access API Key**: Once logged in, navigate to the [API Keys page](https://platform.openai.com/account/api-keys) on your OpenAI Dashboard. From there, you'll find your API key(s). If you don't see any, you may need to create one following OpenAI's provided instructions.
-
-4. **Configure Your Project**: After obtaining your API key, set it as an environment variable in your terminal where the project will run. Depending on your operating system, use the following command:
+2. **Set the Environment Variable**: Configure your project by setting up an environment variable named OPENAI_API_KEY with your actual API key value. Depending on your operating system, use the following command:
 
    For Unix/Linux/macOS:
    ```bash
@@ -60,29 +56,11 @@ To run this project, you'll need an API key from OpenAI. Follow these steps to o
 
 Replace `'your-api-key-here'` with your actual API key.
 
-Please consult OpenAI's [official documentation](https://platform.openai.com/docs/) for further details and any specific requirements or restrictions related to your chosen plan.
-
 **Note**: Be sure to keep your API key private and secure. Do not share it publicly or commit it to a public repository.
-
-### Configuration
-
-You'll need to configure your OpenAI API key. Set up an environment variable named OPENAI_API_KEY with your actual API key value.
-
-For Unix/Linux/macOS:
-
-```bash
-export OPENAI_API_KEY='your-api-key-here'
-```
-
-For Windows:
-
-```bash
-set OPENAI_API_KEY=your-api-key-here
-```
 
 ## Running the Project
 
-<img align="right" alt="Screenshot" src="Screenshot 2023-08-03 at 1.26.14 PM.png" width="450" height="540"/>  
+<img align="right" alt="Screenshot" src="Screenshot 2023-08-07 at 9.07.29 PM.png" width="520" height="520"/>  
 
 After setting up the environment variable, you can run the Flask application:
 
