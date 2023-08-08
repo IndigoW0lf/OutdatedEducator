@@ -79,7 +79,7 @@
                 <label for="country">Country:</label>
                 <select id="country" name="country" required></select>
             </div>
-            <button type="submit">Get Facts</button>
+            <button type="submit" id="getFactsButton">Get Facts</button>
         </form>
         <div class="results" id="results"></div>
     </div>
@@ -98,21 +98,26 @@
         ];
     
         const countrySelect = document.getElementById('country');
-    
+
         countries.forEach((country) => {
-          const option = document.createElement('option');
-          option.value = country;
-          option.text = country;
-          countrySelect.appendChild(option);
+            const option = document.createElement('option');
+            option.value = country;
+            option.text = country;
+            countrySelect.appendChild(option);
         });
-    
+
+        // Event listener for form submission
         document.getElementById('factsForm').addEventListener('submit', function (e) {
             e.preventDefault();
-    
+
+            const button = document.getElementById('getFactsButton');
+            button.disabled = true;
+            button.textContent = "Please wait...";
+
             // Getting values from the input fields
             var year = document.getElementById('year').value;
             var country = document.getElementById('country').value;
-    
+
             // Making a POST request to the backend
             fetch('http://127.0.0.1:5000/getFacts', {
                 method: 'POST',
@@ -137,13 +142,16 @@
 
                 // Display the results
                 document.getElementById('results').innerHTML = 'Facts:' + factsHtml;
+
+                button.disabled = false;
+                button.textContent = "Get Facts";
             })
-
-
-    
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('results').textContent = 'An error occurred. Please try again later.';
+                
+                button.disabled = false;
+                button.textContent = "Get Facts";
             });
         });
     </script>
