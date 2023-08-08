@@ -65,6 +65,10 @@ Replace `'your-api-key-here'` with your actual API key.
 After setting up the environment variable, you can run the Flask application:
 
 ```bash
+cd backend
+```
+
+```bash
 python app.py
 ```
 
